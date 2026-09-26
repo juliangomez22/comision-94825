@@ -1,69 +1,103 @@
 // ==========================================
 // TU LUZ INTERIOR
-// PRE-ENTREGA MÓDULO 1
+// MI PRIMER SCRIPT INTERACTIVO
 // ==========================================
 
 
-// 1. SOLICITAR DATOS AL USUARIO
+// ==========================================
+// 1. CAPTURA DE DATOS
 // ==========================================
 
+// Primer dato: nombre
+const nombre = prompt("¿Cuál es tu nombre?");
 
-// Pedimos el nombre
-const nombre = prompt("Por favor, ingresa tu nombre:");
-
-
-// Pedimos el año de nacimiento
+// Segundo dato: año de nacimiento
 const añoNacimiento = parseInt(
-    prompt("Por favor, ingresa tu año de nacimiento (por ejemplo, 1990):"),
+    prompt("¿En qué año naciste?"),
+    10
+);
+
+// Tercer dato: cantidad de sesiones
+const sesiones = parseInt(
+    prompt("¿Cuántas sesiones de limpieza energética te interesan?"),
     10
 );
 
 
-// Pedimos la cantidad de sesiones
-const cantidadSesiones = parseInt(
-    prompt("¿Cuántas sesiones deseas realizar?"),
-    10
-);
-
-
-// 2. PROCESAR LA INFORMACIÓN
 // ==========================================
-
+// 2. DATOS Y PROCESAMIENTO
+// ==========================================
 
 // Obtenemos el año actual
-const añoActual = 2026;
-
+const añoActual = new Date().getFullYear();
 
 // Calculamos la edad
 const edad = añoActual - añoNacimiento;
 
+// Precio de una sesión individual
+const precioPorSesion = 15000;
 
-// Precio de cada sesión
-const precioSesion = 20000;
+// Duración aproximada de cada sesión
+const horasPorSesion = 1;
+
+// Calculamos la cantidad total de horas
+const horasTotales = sesiones * horasPorSesion;
+
+// Calculamos el precio total de todas las sesiones
+const precioTotal = sesiones * precioPorSesion;
 
 
-// Calculamos el precio total
-const precioTotal = cantidadSesiones * precioSesion;
-
-
-// 3. CONCATENAR INFORMACIÓN
+// ==========================================
+// 3. CONCATENACIÓN DE STRINGS
 // ==========================================
 
+const mensajePrincipal =
+    "Hola " + nombre +
+    ". Tenés aproximadamente " + edad +
+    " años y seleccionaste " + sesiones +
+    " sesión/es de limpieza energética.";
 
-const mensajeFinal =
-    `Hola, ${nombre}! ` +
-    `Tienes ${edad} años. ` +
-    `Elegiste realizar ${cantidadSesiones} sesiones de Tu Luz Interior. ` +
-    `El precio total es de $${precioTotal}.`;
+const mensajeSesiones =
+    "Cada sesión tiene una duración aproximada de " +
+    horasPorSesion + " hora.";
+
+const mensajePrecio =
+    "El precio por una sesión individual es de $" +
+    precioPorSesion.toLocaleString("es-AR") +
+    ".\n\n" +
+    "El precio total por " +
+    sesiones +
+    " sesión/es es de $" +
+    precioTotal.toLocaleString("es-AR") + ".";
 
 
-// 4. MOSTRAR EL RESULTADO
+// ==========================================
+// 4. MOSTRAR RESULTADOS
 // ==========================================
 
+// Mostramos la información mediante alert()
+alert(mensajePrincipal);
 
-// Mostramos el resultado en la consola
-console.log(mensajeFinal);
+alert(mensajeSesiones);
+
+alert(mensajePrecio);
 
 
-// Mostramos el resultado mediante una alerta
-alert(mensajeFinal);
+// ==========================================
+// 5. MOSTRAR INFORMACIÓN EN CONSOLA
+// ==========================================
+
+console.log("================================");
+console.log("       TU LUZ INTERIOR");
+console.log("================================");
+
+console.log("Nombre:", nombre);
+console.log("Año de nacimiento:", añoNacimiento);
+console.log("Edad aproximada:", edad);
+console.log("Cantidad de sesiones:", sesiones);
+console.log("Horas por sesión:", horasPorSesion);
+console.log("Horas totales:", horasTotales);
+console.log("Precio por sesión: $" + precioPorSesion);
+console.log("Precio total: $" + precioTotal);
+
+console.log("================================");
