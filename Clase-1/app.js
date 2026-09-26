@@ -1,61 +1,69 @@
-let nombre = "Julian";  // string o cadena de texto (siempre entre comillas)
-let edad = 28;  // number (no hace falta comillas)
-let soltero = false;  // boolean (solo acepta: true o false)
-let millonario = undefined;  // undefined (no tiene valor)
-let mansion = null;  // null (declaramos que la variable no tiene valor)
-
-//console.log(nombre);  // imprime en consola todas las variables
-//console.log(edad);
-//console.log(soltero);
-//console.log(millonario);
-//console.log(mansion);
-
-millonario = true;  // cambiamos el valor de la variable millonario a true
-console.log(millonario);  // imprime en consola el nuevo valor de millonario
+// ==========================================
+// TU LUZ INTERIOR
+// PRE-ENTREGA MÓDULO 1
+// ==========================================
 
 
-const DNI = 1231231;  // const (constante, no se puede cambiar su valor)
-console.log(DNI);  // imprime en consola el valor de la constante DNI
-
-console.log(typeof nombre); // imprime en consola el tipo de dato de la variable nombre
+// 1. SOLICITAR DATOS AL USUARIO
+// ==========================================
 
 
-let suma = 10 + 10;  // suma de dos números
-let resta = 10 - 5;
-let multiplicacion = 10 * 10;  // multiplicación de dos números
-let division = 10 / 2;
-console.log(suma);
-console.log(resta);
-console.log(multiplicacion);
-console.log(division);  
-
-console.log(suma + resta);  // suma de dos variables
-
-// console.log(nombre + edad);  // concatenación de un string y un number
-
-// camelcase: nombreDeLaVariable
-
-let sumaRara = (nombre + "" + edad);  // concatenación de un string y un number
-// console.log(sumaRara);  // imprime en consola la concatenación de nombre y edad
-
-// funciones nativas
-prompt("Hola, ¿cómo estás?");  // abre un cuadro de diálogo para ingresar texto
-
-// let user = prompt("Julian");  // guarda el valor ingresado en la variable user
-// console.log(user);  // imprime en consola el valor de la variable user
-
-// let user = prompt(number"28");  // guarda el valor ingresado en la variable user
-// console.log(user);  // imprime en consola el valor de la variable user
-// console.log(parseInt(user));  // convierte el valor de user a un número entero y lo imprime en consola
-
-// alert("soy alerta jeje");  // abre un cuadro de diálogo con un mensaje
-
-// confirm
-
-// let siOno = confirm("¿Estás seguro de que quieres continuar?");  // abre un cuadro de diálogo con un mensaje y dos botones (Aceptar y Cancelar)
-// console.log(siOno);  // imprime en consola el valor de la variable siOno (true o false dependiendo de la elección del usuario)
+// Pedimos el nombre
+const nombre = prompt("Por favor, ingresa tu nombre:");
 
 
-let mensaje = ("Hola, soy Julian" + " y tengo " + 28 + " años.");  // string o cadena de texto (siempre entre comillas)
+// Pedimos el año de nacimiento
+const añoNacimiento = parseInt(
+    prompt("Por favor, ingresa tu año de nacimiento (por ejemplo, 1990):"),
+    10
+);
 
-console.log(mensaje);  // imprime en consola el valor de la variable mensaje
+
+// Pedimos la cantidad de sesiones
+const cantidadSesiones = parseInt(
+    prompt("¿Cuántas sesiones deseas realizar?"),
+    10
+);
+
+
+// 2. PROCESAR LA INFORMACIÓN
+// ==========================================
+
+
+// Obtenemos el año actual
+const añoActual = 2026;
+
+
+// Calculamos la edad
+const edad = añoActual - añoNacimiento;
+
+
+// Precio de cada sesión
+const precioSesion = 20000;
+
+
+// Calculamos el precio total
+const precioTotal = cantidadSesiones * precioSesion;
+
+
+// 3. CONCATENAR INFORMACIÓN
+// ==========================================
+
+
+const mensajeFinal =
+    `Hola, ${nombre}! ` +
+    `Tienes ${edad} años. ` +
+    `Elegiste realizar ${cantidadSesiones} sesiones de Tu Luz Interior. ` +
+    `El precio total es de $${precioTotal}.`;
+
+
+// 4. MOSTRAR EL RESULTADO
+// ==========================================
+
+
+// Mostramos el resultado en la consola
+console.log(mensajeFinal);
+
+
+// Mostramos el resultado mediante una alerta
+alert(mensajeFinal);
