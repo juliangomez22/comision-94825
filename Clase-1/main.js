@@ -11,6 +11,7 @@
 // Primer dato: nombre
 const nombre = prompt("¿Cuál es tu nombre?");
 
+
 // Segundo dato: año de nacimiento
 const añoNacimiento = parseInt(
     prompt("¿En qué año naciste?"),
