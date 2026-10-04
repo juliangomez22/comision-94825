@@ -1,104 +1,104 @@
 // ==========================================
 // TU LUZ INTERIOR
-// MI PRIMER SCRIPT INTERACTIVO
+// Cálculo de sesiones y precio
 // ==========================================
 
+// 1. CAPTURA Y VALIDACIÓN DEL NOMBRE
 
-// ==========================================
-// 1. CAPTURA DE DATOS
-// ==========================================
+const nombreIngresado = prompt("¿Cuál es tu nombre?");
 
-// Primer dato: nombre
-const nombre = prompt("¿Cuál es tu nombre?");
+if (nombreIngresado === null || nombreIngresado.trim() === "") {
+    alert("No ingresaste tu nombre. Recargá la página para intentarlo de nuevo.");
+} else {
+    const nombre = nombreIngresado.trim();
 
+    // 2. CAPTURA Y VALIDACIÓN DEL AÑO DE NACIMIENTO
 
-// Segundo dato: año de nacimiento
-const añoNacimiento = parseInt(
-    prompt("¿En qué año naciste?"),
-    10
-);
+    const añoActual = new Date().getFullYear();
+    let añoNacimiento = 0;
 
-// Tercer dato: cantidad de sesiones
-const sesiones = parseInt(
-    prompt("¿Cuántas sesiones de limpieza energética te interesan?"),
-    10
-);
+    while (
+        !Number.isInteger(añoNacimiento) ||
+        añoNacimiento < 1900 ||
+        añoNacimiento > añoActual
+    ) {
+        const respuestaAño = prompt("¿En qué año naciste?");
 
+        if (respuestaAño === null) {
+            break;
+        }
 
-// ==========================================
-// 2. DATOS Y PROCESAMIENTO
-// ==========================================
+        añoNacimiento = Number(respuestaAño);
 
-// Obtenemos el año actual
-const añoActual = new Date().getFullYear();
+        if (
+            !Number.isInteger(añoNacimiento) ||
+            añoNacimiento < 1900 ||
+            añoNacimiento > añoActual
+        ) {
+            alert("Ingresá un año válido entre 1900 y " + añoActual + ".");
+        }
+    }
 
-// Calculamos la edad
-const edad = añoActual - añoNacimiento;
+    if (añoNacimiento >= 1900 && añoNacimiento <= añoActual) {
+        // 3. CAPTURA Y VALIDACIÓN DE LA CANTIDAD DE SESIONES
 
-// Precio de una sesión individual
-const precioPorSesion = 15000;
+        let sesiones = 0;
 
-// Duración aproximada de cada sesión
-const horasPorSesion = 1;
+        while (!Number.isInteger(sesiones) || sesiones <= 0) {
+            const respuestaSesiones = prompt(
+                "¿Cuántas sesiones de limpieza energética te interesan? " +
+                "Ingresá un número entero mayor que 0."
+            );
 
-// Calculamos la cantidad total de horas
-const horasTotales = sesiones * horasPorSesion;
+            if (respuestaSesiones === null) {
+                break;
+            }
 
-// Calculamos el precio total de todas las sesiones
-const precioTotal = sesiones * precioPorSesion;
+            sesiones = Number(respuestaSesiones);
 
+            if (!Number.isInteger(sesiones) || sesiones <= 0) {
+                alert("Ingresá una cantidad entera de sesiones mayor que 0.");
+            }
+        }
 
-// ==========================================
-// 3. CONCATENACIÓN DE STRINGS
-// ==========================================
+        if (Number.isInteger(sesiones) && sesiones > 0) {
+            // 4. CÁLCULOS
 
-const mensajePrincipal =
-    "Hola " + nombre +
-    ". Tenés aproximadamente " + edad +
-    " años y seleccionaste " + sesiones +
-    " sesión/es de limpieza energética.";
+            const edad = añoActual - añoNacimiento;
+            const precioPorSesion = 15000;
+            const horasPorSesion = 1;
+            const horasTotales = sesiones * horasPorSesion;
 
-const mensajeSesiones =
-    "Cada sesión tiene una duración aproximada de " +
-    horasPorSesion + " hora.";
+            let precioTotal = sesiones * precioPorSesion;
 
-const mensajePrecio =
-    "El precio por una sesión individual es de $" +
-    precioPorSesion.toLocaleString("es-AR") +
-    ".\n\n" +
-    "El precio total por " +
-    sesiones +
-    " sesión/es es de $" +
-    precioTotal.toLocaleString("es-AR") + ".";
+            // 5. DECISIÓN: DESCUENTO PARA TRES SESIONES O MÁS
 
+            if (sesiones >= 3) {
+                precioTotal = precioTotal * 0.9;
+                alert("¡Tenés un 10 % de descuento por elegir 3 sesiones o más!");
+            } else {
+                alert("Con menos de 3 sesiones, se aplica el precio normal.");
+            }
 
-// ==========================================
-// 4. MOSTRAR RESULTADOS
-// ==========================================
+            // 6. MOSTRAR RESULTADOS
 
-// Mostramos la información mediante alert()
-alert(mensajePrincipal);
+            const mensaje =
+                "Hola " + nombre + ".\n" +
+                "Tenés aproximadamente " + edad + " años.\n" +
+                "Elegiste " + sesiones + " sesión/es.\n" +
+                "Cada sesión dura aproximadamente " + horasPorSesion + " hora.\n" +
+                "Duración total: " + horasTotales + " hora/s.\n" +
+                "Precio por sesión: $" +
+                precioPorSesion.toLocaleString("es-AR") + ".\n" +
+                "Total a pagar: $" +
+                precioTotal.toLocaleString("es-AR") + ".";
 
-alert(mensajeSesiones);
-
-alert(mensajePrecio);
-
-
-// ==========================================
-// 5. MOSTRAR INFORMACIÓN EN CONSOLA
-// ==========================================
-
-console.log("================================");
-console.log("       TU LUZ INTERIOR");
-console.log("================================");
-
-console.log("Nombre:", nombre);
-console.log("Año de nacimiento:", añoNacimiento);
-console.log("Edad aproximada:", edad);
-console.log("Cantidad de sesiones:", sesiones);
-console.log("Horas por sesión:", horasPorSesion);
-console.log("Horas totales:", horasTotales);
-console.log("Precio por sesión: $" + precioPorSesion);
-console.log("Precio total: $" + precioTotal);
-
-console.log("================================");
+            alert(mensaje);
+            console.log(mensaje);
+        } else {
+            alert("Cancelaste el ingreso de la cantidad de sesiones.");
+        }
+    } else {
+        alert("Cancelaste el ingreso del año de nacimiento.");
+    }
+}
