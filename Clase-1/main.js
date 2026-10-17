@@ -3,58 +3,118 @@
 // Cálculo de sesiones y precio
 // ==========================================
 
-// 1. CAPTURA Y VALIDACIÓN DEL NOMBRE
+const añoActual = new Date().getFullYear();
+const precioPorSesion = 15000;
+const horasPorSesion = 1;
 
-const nombreIngresado = prompt("¿Cuál es tu nombre?");
+// Función 1: recibe un mensaje y valida que el dato no esté vacío.
 
-if (nombreIngresado === null || nombreIngresado.trim() === "") {
-    alert("No ingresaste tu nombre. Recargá la página para intentarlo de nuevo.");
-} else {
-    const nombre = nombreIngresado.trim();
+function pedirTexto(mensaje) {
+    let respuesta = prompt(mensaje);
 
-    // 2. CAPTURA Y VALIDACIÓN DEL AÑO DE NACIMIENTO
-
-    const añoActual = new Date().getFullYear();
-    let añoNacimiento = 0;
-
-    while (
-        !Number.isInteger(añoNacimiento) ||
-        añoNacimiento < 1900 ||
-        añoNacimiento > añoActual
-    ) {
-        const respuestaAño = prompt("¿En qué año naciste?");
-
-        if (respuestaAño === null) {
-            break;
+    while (respuesta === null || respuesta.trim() === "") {
+        if (respuesta === null) {
+            alert("Cancelaste el ingreso. Recargá la página para intentarlo de nuevo.");
+            return null;
         }
 
-        añoNacimiento = Number(respuestaAño);
+        alert("Este dato no puede quedar vacío.");
+        respuesta = prompt(mensaje);
+    }
 
-        if (
-            !Number.isInteger(añoNacimiento) ||
-            añoNacimiento < 1900 ||
-            añoNacimiento > añoActual
-        ) {
-            alert("Ingresá un año válido entre 1900 y " + añoActual + ".");
+    return respuesta.trim();
+}
+
+// Función 2: recibe una pregunta y un rango, y pide un año válido.
+// El return devuelve el año ingresado.
+
+function pedirAño(mensaje, minimo, maximo) {
+    let año = 0;
+
+    while (!Number.isInteger(año) || año < minimo || año > maximo) {
+        const respuesta = prompt(mensaje);
+
+        if (respuesta === null) {
+            alert("Cancelaste el ingreso del año de nacimiento.");
+            return null;
+        }
+
+        año = Number(respuesta);
+
+        if (!Number.isInteger(año) || año < minimo || año > maximo) {
+            alert("Ingresá un año válido entre " + minimo + " y " + maximo + ".");
         }
     }
 
-    if (añoNacimiento >= 1900 && añoNacimiento <= añoActual) {
-        // 3. CAPTURA Y VALIDACIÓN DE LA CANTIDAD DE SESIONES
+    return año;
+}
 
+// Función flecha: recibe la cantidad de sesiones y devuelve el precio total.
+
+const calcularPrecio = (sesiones) => {
+    let total = sesiones * precioPorSesion;
+
+    if (sesiones >= 3) {
+        total = total * 0.9; // Aplica un 10 % de descuento.
+    }
+
+    return total;
+};
+
+// Función 3: recibe los datos del simulador y prepara el mensaje final.
+
+function mostrarResultado(nombre, añoNacimiento, sesiones, precioTotal) {
+    const edad = añoActual - añoNacimiento;
+    const horasTotales = sesiones * horasPorSesion;
+
+    let mensaje =
+        "Hola " + nombre + ".\n" +
+        "Tenés aproximadamente " + edad + " años.\n" +
+        "Elegiste " + sesiones + " sesión/es.\n" +
+        "Duración total: " + horasTotales + " hora/s.\n" +
+        "Precio por sesión: $" + precioPorSesion.toLocaleString("es-AR") + ".\n" +
+        "Total a pagar: $" + precioTotal.toLocaleString("es-AR") + ".";
+
+    if (sesiones >= 3) {
+        mensaje += "\nSe aplicó un 10 % de descuento.";
+    } else {
+        mensaje += "\nNo se aplicó descuento.";
+    }
+
+    alert(mensaje);
+    console.log(mensaje);
+}
+
+// ==========================================
+// PROGRAMA PRINCIPAL: pedir datos y llamar
+// a las funciones
+// ==========================================
+
+
+const nombre = pedirTexto("¿Cuál es tu nombre?");
+
+if (nombre !== null) {
+    const añoNacimiento = pedirAño(
+        "¿En qué año naciste?",
+        1900,
+        añoActual
+    );
+
+    if (añoNacimiento !== null) {
         let sesiones = 0;
 
         while (!Number.isInteger(sesiones) || sesiones <= 0) {
-            const respuestaSesiones = prompt(
+            const respuesta = prompt(
                 "¿Cuántas sesiones de limpieza energética te interesan? " +
                 "Ingresá un número entero mayor que 0."
             );
 
-            if (respuestaSesiones === null) {
+            if (respuesta === null) {
+                alert("Cancelaste el ingreso de la cantidad de sesiones.");
                 break;
             }
 
-            sesiones = Number(respuestaSesiones);
+            sesiones = Number(respuesta);
 
             if (!Number.isInteger(sesiones) || sesiones <= 0) {
                 alert("Ingresá una cantidad entera de sesiones mayor que 0.");
@@ -62,43 +122,8 @@ if (nombreIngresado === null || nombreIngresado.trim() === "") {
         }
 
         if (Number.isInteger(sesiones) && sesiones > 0) {
-            // 4. CÁLCULOS
-
-            const edad = añoActual - añoNacimiento;
-            const precioPorSesion = 15000;
-            const horasPorSesion = 1;
-            const horasTotales = sesiones * horasPorSesion;
-
-            let precioTotal = sesiones * precioPorSesion;
-
-            // 5. DECISIÓN: DESCUENTO PARA TRES SESIONES O MÁS
-
-            if (sesiones >= 3) {
-                precioTotal = precioTotal * 0.9;
-                alert("¡Tenés un 10 % de descuento por elegir 3 sesiones o más!");
-            } else {
-                alert("Con menos de 3 sesiones, se aplica el precio normal.");
-            }
-
-            // 6. MOSTRAR RESULTADOS
-
-            const mensaje =
-                "Hola " + nombre + ".\n" +
-                "Tenés aproximadamente " + edad + " años.\n" +
-                "Elegiste " + sesiones + " sesión/es.\n" +
-                "Cada sesión dura aproximadamente " + horasPorSesion + " hora.\n" +
-                "Duración total: " + horasTotales + " hora/s.\n" +
-                "Precio por sesión: $" +
-                precioPorSesion.toLocaleString("es-AR") + ".\n" +
-                "Total a pagar: $" +
-                precioTotal.toLocaleString("es-AR") + ".";
-
-            alert(mensaje);
-            console.log(mensaje);
-        } else {
-            alert("Cancelaste el ingreso de la cantidad de sesiones.");
+            const precioTotal = calcularPrecio(sesiones);
+            mostrarResultado(nombre, añoNacimiento, sesiones, precioTotal);
         }
-    } else {
-        alert("Cancelaste el ingreso del año de nacimiento.");
     }
 }
