@@ -1,9 +1,11 @@
+
 // ==========================================
 // TU LUZ INTERIOR
-// Simulador de servicios
+// Simulador de sesiones y catálogo de servicios
 // ==========================================
 
-// Datos generales
+// DATOS GENERALES
+
 const añoActual = new Date().getFullYear();
 const precioPorSesion = 15000;
 const horasPorSesion = 1;
@@ -20,116 +22,148 @@ class Servicio {
         this.duracion = duracion;
     }
 
+    // Método para aplicar un descuento al precio.
     aplicarDescuento(porcentaje) {
         this.precio = this.precio - (this.precio * porcentaje / 100);
     }
 }
 
 // ==========================================
-// INSTANCIACIÓN DE OBJETOS
+// CREACIÓN DE OBJETOS
 // ==========================================
 
-const servicio1 = new Servicio("Limpieza energética", "Energía", 15000, 1);
-
-const servicio2 = new Servicio("Reiki", "Sanación", 18000, 1);
-
-const servicio3 = new Servicio("Meditación guiada", "Bienestar", 12000, 1);
-
-// ==========================================
-// ARRAY DE SERVICIOS
-// ==========================================
-
-const servicios = [servicio1, servicio2, servicio3];
-
-// ==========================================
-// FUNCIONES DEL SIMULADOR
-// ==========================================
-
-// Mostrar servicios disponibles
-function mostrarServicios() {
-    console.log("SERVICIOS DISPONIBLES:");
-
-    for (const servicio of servicios) {
-        console.log(
-            servicio.nombre +
-            " - $" + servicio.precio +
-            " - Duración: " + servicio.duracion + " hora/s"
-        );
-    }
-}
-
-// Agregar un nuevo servicio
-function agregarServicio() {
-    const nombre = prompt("Ingrese el nombre del servicio:");
-
-    if (nombre === "") {
-        console.log("Debe ingresar un nombre.");
-    } else {
-        const nuevoServicio = new Servicio(
-            nombre,
-            "Nuevo servicio",
-            precioPorSesion,
-            horasPorSesion
-        );
-
-        servicios.push(nuevoServicio);
-
-        console.log("Servicio agregado correctamente.");
-    }
-}
-
-// Buscar un servicio
-function buscarServicio(nombre) {
-    const encontrado = servicios.find(
-        servicio => servicio.nombre === nombre
-    );
-
-    if (encontrado) {
-        console.log("Servicio encontrado:", encontrado);
-    } else {
-        console.log("El servicio no existe.");
-    }
-}
-
-// ==========================================
-// APLICACIÓN DE MÉTODOS DE ARRAY
-// ==========================================
-
-// Agregar un servicio al principio
-servicios.unshift(
-    new Servicio("Armonización de chakras", "Energía", 16000, 1)
+const servicio1 = new Servicio(
+    "Limpieza energética",
+    "Limpieza y armonización",
+    15000,
+    1
 );
 
-// Eliminar el último servicio
-servicios.pop();
-
-// Buscar si existe un servicio
-console.log(
-    "¿Existe Reiki?",
-    servicios.some(servicio => servicio.nombre === "Reiki")
+const servicio2 = new Servicio(
+    "Reiki",
+    "Terapia energética",
+    15000,
+    1
 );
 
-// Eliminar un elemento utilizando splice
-servicios.splice(2, 1);
+const servicio3 = new Servicio(
+    "Meditación guiada",
+    "Bienestar y relajación",
+    15000,
+    1
+);
 
-// ==========================================
-// EJECUCIÓN DE MÉTODOS DE CLASE
-// ==========================================
+// Aplicamos descuentos a los objetos.
 
-// Aplicar descuentos
 servicio1.aplicarDescuento(10);
 servicio2.aplicarDescuento(15);
-servicio3.aplicarDescuento(5);
+servicio3.aplicarDescuento(20);
 
-// Mostrar resultados modificados
-console.log("RESULTADOS DESPUÉS DE LOS DESCUENTOS:");
+// Verificamos los resultados en consola.
+
+console.log("===== SERVICIOS CON CLASES Y OBJETOS =====");
 
 console.log(servicio1);
 console.log(servicio2);
 console.log(servicio3);
 
 // ==========================================
+// CATÁLOGO DE SERVICIOS
+// ==========================================
+
+const servicios = [
+    "Limpieza energética",
+    "Reiki",
+    "Meditación guiada",
+    "Armonización de chakras",
+    "Lectura de tarot"
+];
+
+// ==========================================
+// FUNCIÓN PARA MOSTRAR LOS SERVICIOS
+// ==========================================
+
+function mostrarServicios() {
+    console.log("===== CATÁLOGO TU LUZ INTERIOR =====");
+
+    for (const servicio of servicios) {
+        console.log(servicio);
+    }
+}
+
+// ==========================================
+// FUNCIÓN PARA AGREGAR UN SERVICIO
+// ==========================================
+
+function agregarServicio() {
+    const nuevoServicio = prompt("Ingresá el nombre del nuevo servicio:");
+
+    if (nuevoServicio && nuevoServicio.trim() !== "") {
+        servicios.push(nuevoServicio);
+
+        console.log("Servicio agregado correctamente.");
+        mostrarServicios();
+    } else {
+        console.log("No ingresaste un nombre válido.");
+    }
+}
+
+// ==========================================
+// FUNCIÓN PARA CALCULAR SESIONES
+// ==========================================
+
+function calcularSesiones() {
+    const nombre = prompt("Ingresá tu nombre:");
+
+    const añoNacimiento = Number(
+        prompt("Ingresá tu año de nacimiento:")
+    );
+
+    const cantidadSesiones = Number(
+        prompt("¿Cuántas sesiones deseás realizar?")
+    );
+
+    if (
+        nombre === null ||
+        añoNacimiento <= 0 ||
+        añoNacimiento > añoActual ||
+        !Number.isInteger(añoNacimiento) ||
+        cantidadSesiones <= 0 ||
+        !Number.isInteger(cantidadSesiones)
+    ) {
+        console.log("Los datos ingresados no son válidos.");
+        return;
+    }
+
+    const edad = añoActual - añoNacimiento;
+
+    let precioTotal = precioPorSesion * cantidadSesiones;
+
+    if (cantidadSesiones >= 3) {
+        precioTotal = precioTotal * 0.90;
+
+        console.log("¡Obtuviste un 10% de descuento!");
+    }
+
+    const horasTotales = horasPorSesion * cantidadSesiones;
+
+    console.log("===== RESUMEN DE TU RESERVA =====");
+    console.log("Nombre: " + nombre);
+    console.log("Edad: " + edad + " años");
+    console.log("Cantidad de sesiones: " + cantidadSesiones);
+    console.log("Horas totales: " + horasTotales);
+    console.log("Precio por sesión: $" + precioPorSesion);
+    console.log("Precio final: $" + precioTotal);
+}
+
+// ==========================================
 // EJECUCIÓN DEL SIMULADOR
 // ==========================================
 
 mostrarServicios();
+
+calcularSesiones();
+
+// ==================================
+// FIN DEL SIMULADOR
+// ==================================
